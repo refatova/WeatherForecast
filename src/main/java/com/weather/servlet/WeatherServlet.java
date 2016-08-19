@@ -98,6 +98,7 @@ public class WeatherServlet extends HttpServlet {
         for (Weather w : resultList) {
             String s = String.format("%-10s%-25s%-25s%-15.1f%-15.1f%-15s%-15.1f%-15.1f%n", w.country, w.name, w.main, w.temp, w.windSpeed, w.source,w.latitude,w.longitude);
             resp.getOutputStream().print(s);
+
         }
     }
 

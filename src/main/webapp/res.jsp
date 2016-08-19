@@ -49,11 +49,11 @@ List<Weather> resultList=(List<Weather>)request.getAttribute("resultList");
             <td><%=weather.getCountry()%></td>
             <td><%=weather.getName()%></td>
             <td><%=weather.getMain()%></td>
-            <td><%=weather.getTemp()%></td>
-            <td><%=weather.getWindSpeed()%></td>
+            <td><%=String.format(Locale.ENGLISH,"%-15.1f",weather.getTemp())%></td>
+            <td><%= String.format(Locale.ENGLISH,"%-15.1f",weather.getWindSpeed())%></td>
             <td><%=weather.getSource()%></td>
-            <td><%=weather.getLatitude()%></td>
-            <td><%=weather.getLongitude()%></td>
+            <td><%=String.format(Locale.ENGLISH,"%-15.1f",weather.getLatitude())%></td>
+            <td><%=String.format(Locale.ENGLISH,"%-15.1f",weather.getLongitude())%></td>
 
 
          </tr>
