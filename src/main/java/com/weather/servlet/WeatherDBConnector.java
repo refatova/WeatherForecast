@@ -18,15 +18,10 @@ import java.util.*;
  */
 public class WeatherDBConnector {
     private static final Logger LOG = Logger.getLogger(WeatherDBConnector.class);
-    //    private static SimpleDateFormat dateFormat=new SimpleDateFormat("dd.MM.yyyy");
-    //  DateTimeFormatter dateFormat=DateTimeFormatter(DateTimeFormatter.ISO_LOCAL_DATE);
     static DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-    //    LocalDate date = LocalDate.now();
-//    String text = LocalDate.now().format(formatter);
     static LocalDate parsedDate = LocalDate.parse(LocalDate.now().format(formatter), formatter);
     Date date = Date.valueOf(parsedDate);
 
-    //    static Connection dbConnection;
     private static final String DB_NAME = "Weather";
 
 
@@ -36,11 +31,6 @@ public class WeatherDBConnector {
             Context ctx = new InitialContext(); // JNDI
             DataSource ds = (DataSource) ctx.lookup("java:comp/env/jdbc/weatherdb"); // JNDI
             dbConnection = ds.getConnection(); // JNDI
-
-//            DriverManager.registerDriver(new org.mariadb.jdbc.Driver());
-//            dbConnection = DriverManager.getConnection("jdbc:mariadb://localhost:3306/", "root", "");
-//            String useDB = "use Weather;";
-//            dbConnection.createStatement().execute(useDB);
 
         } catch (SQLException e) {
             LOG.error(e.getMessage());
@@ -68,7 +58,6 @@ public class WeatherDBConnector {
                 "  PRIMARY KEY (`city_ID`,`date`)\n" +
                 ")";
 
-        //   String insertToWeatherTable="insert into Weather.Forecast (city,city_id, temperature,wind_speed, main_info,date) values (%s,%d,%f,%f,%s,%s)";
 
         try {
             dbConnection = getDBConnection();
@@ -88,44 +77,33 @@ public class WeatherDBConnector {
     }
 
 
-    private Weather selectFromDbByIdAndDate(int id) {
+    protected Weather selectFromDbByIdAndDate(int id) {
         String selectFromForecastTableSQL = "select * from Weather.Forecast where city_ID =? and date=?";
-        PreparedStatement prepareStatement = null;
+        PreparedStatement prepStatement = null;
         Connection dbConnection = null;
         Weather w = null;
         try {
             dbConnection = getDBConnection();
             dbConnection.setAutoCommit(false);
-            prepareStatement = dbConnection.prepareStatement(selectFromForecastTableSQL);
-            prepareStatement.setInt(1, id);
-            prepareStatement.setDate(2, date);
+            prepStatement = dbConnection.prepareStatement(selectFromForecastTableSQL);
+            prepStatement.setInt(1, id);
+            prepStatement.setDate(2, date);
 
-            ResultSet result = prepareStatement.executeQuery();
+            ResultSet result = prepStatement.executeQuery();
             LOG.trace("RESULTSET after executing the query" + result);
-
 
             if (result.next()) {
                 w = createWeatherObjectFromResultSet(result);
-//                w = new Weather();
-//                w.name = result.getString("city");
-//                w.id = result.getInt("city_id");
-//                w.country = result.getString("country");
-//                w.main = result.getString("main_info");
-//                w.temp = result.getDouble("temperature");
-//                w.windSpeed = result.getDouble("wind_speed");
-//                w.latitude = result.getDouble("latitude");
-//                w.longitude = result.getDouble("longitude");
-//                w.source = "DataBase";
             }
 
             dbConnection.commit();
-//
+
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
-            if (prepareStatement != null) {
+            if (prepStatement != null) {
                 try {
-                    prepareStatement.close();
+                    prepStatement.close();
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
@@ -145,11 +123,9 @@ public class WeatherDBConnector {
 
     protected Map<String, Weather> getWeatherInfoFromDbByCityId(String[] countries) {
         Map<String, Weather> excistCitiesInDB = new HashMap<String, Weather>();
-//        List<String> notExistInDB = new ArrayList<String>();
         for (int i = 0; i < countries.length; i++) {
             Weather w = selectFromDbByIdAndDate(Integer.parseInt(countries[i]));
             if (w != null) excistCitiesInDB.put(countries[i], w);
-//            else notExistInDB.add(countries[i]);
         }
 
         return excistCitiesInDB;
@@ -171,7 +147,6 @@ public class WeatherDBConnector {
 
             ResultSet result = prepareStatement.executeQuery();
             LOG.trace("RESULTSET after executing the query" + result);
-
 
             if (result.next()) w = createWeatherObjectFromResultSet(result);
             dbConnection.commit();
@@ -199,7 +174,6 @@ public class WeatherDBConnector {
 
     private Weather createWeatherObjectFromResultSet(ResultSet result) throws SQLException {
         Weather w = new Weather();
-//        w = new Weather();
         w.name = result.getString("city");
         w.id = result.getInt("city_id");
         w.country = result.getString("country");

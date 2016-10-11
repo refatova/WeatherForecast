@@ -1,5 +1,7 @@
 <%@ page language="java" %>
-<%@ page import="com.weather.servlet.Weather" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%--@ page import="com.weather.servlet.Weather" --%>
 <%@ page import="java.util.*" %>
 
 
@@ -17,14 +19,13 @@ border: 1px solid black;
 }
 </style>
 </head>
-<%-- List<Weather> resultList=session.getAttribute("resultList") --%>
-<%
-List<Weather> resultList=(List<Weather>)request.getAttribute("resultList");
-//out.println("rs==="+resultList);
-%>
-<%
 
-%>
+<%--
+List<Weather> resultList=(List<Weather>)request.getAttribute("resultList");
+--%>
+
+
+
 
 <body>
 <table><caption style="margin-bottom: 10px;font-size: 180%; font-family: Arial, Helvetica, sans-serif; ">Weather for today</caption>
@@ -37,41 +38,34 @@ List<Weather> resultList=(List<Weather>)request.getAttribute("resultList");
     <th>Latitude</th>
     <th>Longitude</th>
 </tr>
-
-    <%
-    //out.println(request.getAttribute("select-country"));
- //   out.println(request.getAttribute("resultList"));
-
-    for(Weather weather : resultList)
-    {
-    %>
-        <tr>
-            <td><%=weather.getCountry()%></td>
-            <td><%=weather.getName()%></td>
-            <td><%=weather.getMain()%></td>
-            <td><%=String.format(Locale.ENGLISH,"%-15.1f",weather.getTemp())%></td>
-            <td><%= String.format(Locale.ENGLISH,"%-15.1f",weather.getWindSpeed())%></td>
-            <td><%=weather.getSource()%></td>
-            <td><%=String.format(Locale.ENGLISH,"%-15.1f",weather.getLatitude())%></td>
-            <td><%=String.format(Locale.ENGLISH,"%-15.1f",weather.getLongitude())%></td>
-
-
-         </tr>
-
-    <%
-    }
-    %>
-
-
-<%--
-    <c:forEach items="${resultList}" var="item">
-        <tr>
-           ${item}
+<fmt:setLocale value="en_US"/>
+<c:forEach items="${list}" var="weather">
+     <tr>
+                <td>
+                    <c:out value="${weather.getCountry()}"></c:out></td>
+                <td>
+                    <c:out value="${weather.getName()}"></c:out></td>
+                <td>
+                    <c:out value="${weather.getMain()}"></c:out></td>
+                <td>
+                    <c:set var="temp" value="${weather.getTemp()}" />
+                    <fmt:formatNumber value="${temp}" maxFractionDigits="3"/></td>
+                <td>
+                    <c:set var="wind" value="${weather.getWindSpeed()}"/>
+                    <fmt:formatNumber value="${wind}" maxFractionDigits="3"/></td>
+                <td>
+                    <c:out value="${weather.getSource()}"></c:out></td>
+                <td>
+                    <c:set var="lat" value="${weather.getLatitude()}"/>
+                    <fmt:formatNumber value="${lat}" maxFractionDigits="3"/></td>
+                <td>
+                    <c:set var="lon" value="${weather.getLongitude()}"/>
+                    <fmt:formatNumber value="${lon}" maxFractionDigits="3"/></td>
 
 
-        </tr>
-    </c:forEach>
-    --%>
+             </tr>
+</c:forEach>
+
 </table>
 </body>
 </html>

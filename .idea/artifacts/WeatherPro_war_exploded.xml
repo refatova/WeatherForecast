@@ -1,0 +1,34 @@
+<component name="ArtifactManager">
+  <artifact type="exploded-war" name="WeatherPro:war exploded">
+    <output-path>$PROJECT_DIR$/target/com.weather.servlet</output-path>
+    <root id="root">
+      <element id="directory" name="WEB-INF">
+        <element id="directory" name="classes">
+          <element id="module-output" name="WeatherPro" />
+        </element>
+        <element id="directory" name="lib">
+          <element id="library" level="project" name="Maven: javax.servlet:javax.servlet-api:4.0.0-b01" />
+          <element id="library" level="project" name="Maven: com.google.guava:guava:19.0" />
+          <element id="library" level="project" name="Maven: org.testng:testng:6.8.1" />
+          <element id="library" level="project" name="Maven: junit:junit:4.10" />
+          <element id="library" level="project" name="Maven: org.hamcrest:hamcrest-core:1.1" />
+          <element id="library" level="project" name="Maven: org.beanshell:bsh:2.0b4" />
+          <element id="library" level="project" name="Maven: com.beust:jcommander:1.27" />
+          <element id="library" level="project" name="Maven: org.yaml:snakeyaml:1.6" />
+          <element id="library" level="project" name="Maven: org.slf4j:slf4j-api:1.6.4" />
+          <element id="library" level="project" name="Maven: org.slf4j:slf4j-log4j12:1.6.4" />
+          <element id="library" level="project" name="Maven: log4j:log4j:1.2.17" />
+          <element id="library" level="project" name="Maven: com.google.code.gson:gson:2.6.2" />
+          <element id="library" level="project" name="Maven: mysql:mysql-connector-java:5.1.38" />
+          <element id="library" level="project" name="Maven: org.mariadb.jdbc:mariadb-java-client:1.4.2" />
+          <element id="library" level="project" name="Maven: jstl:jstl:1.2" />
+          <element id="library" level="project" name="Maven: org.mockito:mockito-all:1.9.5" />
+        </element>
+      </element>
+      <element id="directory" name="META-INF">
+        <element id="file-copy" path="$PROJECT_DIR$/target/com.weather.servlet/META-INF/MANIFEST.MF" />
+      </element>
+      <element id="javaee-facet-resources" facet="WeatherPro/web/Web" />
+    </root>
+  </artifact>
+</component>
